@@ -1,0 +1,22 @@
+.slide {
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.slide1 {
+  background-image: url("/banner1.webp");
+}
+
+.slide2 {
+  background-image: url("/banner2.jpg");
+}
+
+.slide3 {
+  background-image: url("/banner3.jpg");
+}
