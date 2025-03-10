@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <div className="container mx-auto px-2 lg:px-16">
+      <div className="container mx-auto px-2 lg:px-16 mt-6">
         {/* Navbar for large screens */}
         <div className="hidden lg:flex justify-between items-center py-4">
           <div className="flex items-center gap-6">

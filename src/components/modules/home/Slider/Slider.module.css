@@ -1,14 +1,32 @@
 .slide {
+  position: relative;
   height: 600px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  width: 100%;
+  align-items: center;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: rgba(0, 0, 0, 0.7);
 }
 
+.slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.slide > div {
+  position: relative;
+  z-index: 2;
+}
+
+/* Background images */
 .slide1 {
   background-image: url("/banner1.webp");
 }
