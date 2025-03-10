@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -14,53 +15,47 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { loginSchema } from "./loginValidation";
+import { toast } from "sonner";
+import { loginUser } from "@/services/AuthService";
+import { useUser } from "@/context/UserContext";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
 
-  //   const [recaptchaStatus, setRecaptchaStatus] = useState(false);
+  const { setIsLoading } = useUser();
 
   const {
     formState: { isSubmitting },
   } = form;
 
-  //   const searchParams = useSearchParams();
-  //   const redirect = searchParams.get("redirectPath");
-  //   const router = useRouter();
-
-  //   const handleRecaptcha = async (value: string | null) => {
-  //     try {
-  //       const res = await reCaptchaTokenVerification(value!);
-  //       setIsLoading(true);
-
-  //       if (res.success) {
-  //         setRecaptchaStatus(true);
-  //       }
-  //     } catch (err: any) {
-  //       console.error(err);
-  //     }
-  //   };
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
-    // try {
-    //   const res = await loginUser(data);
-    //   if (res.success) {
-    //     toast.success(res?.message);
+    const toastId = toast.loading("Logging...", {
+      duration: 2000,
+    });
+    try {
+      const res = await loginUser(data);
+      setIsLoading(true);
+      if (res.success) {
+        toast.success(res?.message, { id: toastId });
 
-    //     if (redirect) {
-    //       router.push(redirect);
-    //     } else {
-    //       router.push("/profile");
-    //     }
-    //   } else {
-    //     toast.error(res?.message);
-    //   }
-    // } catch (err: any) {
-    //   console.error(err);
-    // }
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
+      } else {
+        toast.error(res?.message, { id: toastId });
+      }
+    } catch (err: any) {
+      toast.error(err, { id: toastId });
+    }
   };
 
   return (
@@ -112,14 +107,6 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-
-          {/* <div className="flex w-full mt-5">
-            <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
-              onChange={handleRecaptcha}
-              className="mx-auto"
-            />
-          </div> */}
 
           <div>
             <Button

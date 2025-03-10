@@ -8,10 +8,12 @@ import { useState } from "react";
 import PopOver from "./PopOver";
 import { FaRegHeart } from "react-icons/fa";
 import MyButton from "./MyButton";
+import { useUser } from "@/context/UserContext";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const pathname = usePathname();
+  const { user } = useUser();
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -42,20 +44,13 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="flex items-center gap-7">
-            <Link href="/login">
-              <MyButton label="LOG IN" />
-            </Link>
-            <PopOver />
-            {/* {!user && <Login />} */}
-            {/* {!user && (
-              <Link
-                to="/login"
-                className="flex items-center gap-2 bg-[#1e2525] text-white p-2"
-              >
-                <GoPerson /> LOG IN/SIGN UP
+            {user ? (
+              <PopOver />
+            ) : (
+              <Link href="/login">
+                <MyButton label="LOG IN" />
               </Link>
-            )} */}
-            {/* {user && <PopOver />} */}
+            )}
             <Link href="/wishlist">
               <FaRegHeart className="text-2xl" />
             </Link>
@@ -87,17 +82,19 @@ const Navbar = () => {
               {/* <img src={logo} alt="" className="h-14 w-14" /> */}LOGO
             </div>
           </div>
-          {/* {!user && <Login />} */}
-          {/* <button className="flex items-center gap-2 bg-[#1e2525] text-white p-2">
-            <GoPerson /> LOG IN/SIGN UP
-          </button> */}
-          {/* {user && <PopOver />} */}
+          {user ? (
+            <PopOver />
+          ) : (
+            <Link href="/login">
+              <MyButton label="LOG IN" />
+            </Link>
+          )}
         </div>
 
         {/* Drawer Menu */}
         {isDrawerOpen && (
           <div
-            className={`lg:hidden absolute duration-1000 ${
+            className={`lg:hidden absolute duration-1000 z-30 ${
               isDrawerOpen ? "top-14" : "-top-96"
             }`}
           >
@@ -107,9 +104,7 @@ const Navbar = () => {
                   key={href}
                   href={href}
                   className={`${
-                    pathname === href
-                      ? "text-teal-600 font-bold"
-                      : "text-gray-700 hover:text-6eal-700"
+                    pathname === href ? "text-[#B59175]" : "text-black"
                   }`}
                 >
                   {label}
