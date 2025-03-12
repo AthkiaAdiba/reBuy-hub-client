@@ -64,3 +64,22 @@ export const getCurrentUser = async () => {
     return null;
   }
 };
+
+export const getNewToken = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: (await cookies()).get("refreshToken")!.value,
+        },
+      }
+    );
+
+    return await res.json();
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
