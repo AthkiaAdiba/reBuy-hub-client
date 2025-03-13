@@ -28,7 +28,46 @@ export const createItem = async (itemData: FieldValues) => {
   }
 };
 
-export const getAllItems = async () => {
+export const getAllItems = async (query?: {
+  [key: string]: string | string[] | undefined;
+}) => {
+  const params = new URLSearchParams();
+
+  if (query?.price) {
+    params.append("price", query?.price.toString());
+  }
+
+  if (query?.category) {
+    params.append("category", query?.category.toString());
+  }
+
+  if (query?.status) {
+    params.append("status", query?.status.toString());
+  }
+
+  if (query?.searchTerm) {
+    params.append("searchTerm", query?.searchTerm.toString());
+  }
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/listings?${params}`,
+      {
+        next: {
+          tags: ["item"],
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const getAllItemsToGetCategories = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/listings`, {
       next: {

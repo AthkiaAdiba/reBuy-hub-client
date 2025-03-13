@@ -1,9 +1,9 @@
 import AddListModal from "@/components/modules/listings/AddListModal";
 import AllListsTable from "@/components/modules/listings/AllListsTable";
-import { getAllItems } from "@/services/Listings";
+import { getAllItemsOfOwner } from "@/services/Listings";
 
 const DashboardProductsPage = async () => {
-  const { data: allItems } = await getAllItems();
+  const { data: allItems } = await getAllItemsOfOwner();
 
   return (
     <div className="px-10">
