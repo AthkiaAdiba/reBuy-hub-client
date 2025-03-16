@@ -9,11 +9,14 @@ import PopOver from "./PopOver";
 import { FaRegHeart } from "react-icons/fa";
 import MyButton from "./MyButton";
 import { useUser } from "@/context/UserContext";
+import { useAppSelector } from "@/redux/hooks";
+import { orderedProductsSelector } from "@/redux/features/cartSlice";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const pathname = usePathname();
   const { user } = useUser();
+  const allItems = useAppSelector(orderedProductsSelector);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -59,7 +62,7 @@ const Navbar = () => {
                 <SlHandbag /> CART
               </button>
               <p className="relative -mt-10 ml-3 text-2xl font-bold text-red-600">
-                0{/* {cartData?.items?.length} */}
+                {allItems?.length}
               </p>
             </Link>
           </div>
@@ -115,7 +118,7 @@ const Navbar = () => {
                   <SlHandbag /> CART
                 </button>
                 <p className="relative -mt-10 ml-3 text-2xl font-bold text-red-600">
-                  0
+                  {allItems?.length}
                 </p>
               </Link>
             </ul>

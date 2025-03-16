@@ -1,10 +1,21 @@
+"use client";
+import { addProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { TList } from "@/types/list";
 import Image from "next/image";
 import Link from "next/link";
 import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingBag4Line } from "react-icons/ri";
+import { toast } from "sonner";
 
 const ProductCard = ({ item }: { item: TList }) => {
+  const dispatch = useAppDispatch();
+
+  const handleAddProduct = (product: TList) => {
+    dispatch(addProduct(product));
+    toast.success("Your chosen product is added to the cart.");
+  };
+
   return (
     <div className="font-sans mb-20">
       <Image
@@ -23,7 +34,9 @@ const ProductCard = ({ item }: { item: TList }) => {
               <FaEye />
             </Link>
             <FaRegHeart />
-            <RiShoppingBag4Line />
+            <button onClick={() => handleAddProduct(item)}>
+              <RiShoppingBag4Line />
+            </button>
           </div>
         </div>
         <h1 className="text-xl">$ {item?.price}</h1>

@@ -16,7 +16,7 @@ import UpdateListModal from "./UpdateListModal";
 import { toast } from "sonner";
 import { deleteItem, updateItemStatus } from "@/services/Listings";
 
-const AllListsTable = ({ allItems }: { allItems: TList[] }) => {
+const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
   const handleStatusChange = async (id: string) => {
     const toastId = toast.loading("Updating Item Status...", {
       duration: 2000,
@@ -73,7 +73,7 @@ const AllListsTable = ({ allItems }: { allItems: TList[] }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {allItems?.map((item: TList) => (
+            {allItemsOfOwner?.map((item: TList) => (
               <TableRow key={item._id}>
                 <TableCell className="text-2xl md:text-xs lg:text-base">
                   {item?.title}

@@ -1,4 +1,4 @@
-import { homeServices } from "@/constants/homeServices";
+import { homeServices } from "@/constants/HomeServices";
 
 const HomeService = () => {
   return (

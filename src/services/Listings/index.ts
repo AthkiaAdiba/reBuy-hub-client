@@ -102,9 +102,11 @@ export const getAllItemsOfOwner = async () => {
     );
 
     const data = await res.json();
+    console.log(data);
 
     return data;
   } catch (error: any) {
+    console.log(error);
     return Error(error.message);
   }
 };

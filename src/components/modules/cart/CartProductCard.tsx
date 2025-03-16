@@ -1,18 +1,31 @@
+"use client";
+
+import { currencyFormatter } from "@/lib/currencyFormatter";
+import { removeProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { TList } from "@/types/list";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 
 const CartProductCard = ({ product }: { product: TList }) => {
+  const dispatch = useAppDispatch();
+
+  const handleRemoveProductFromCart = (id: string) => {
+    dispatch(removeProduct(id));
+  };
+
   return (
     <div className="bg-white rounded-lg flex p-5 gap-5 font-sans">
       <div className="h-full w-32 overflow-hidden">
-        <Image
-          src={product?.images?.[0]}
-          height={200}
-          width={200}
-          alt="product"
-          className="aspect-square object-cover"
-        />
+        {product?.images?.[0] && (
+          <Image
+            src={product.images[0]}
+            height={200}
+            width={200}
+            alt={product.title || "Product image"}
+            className="aspect-square object-cover"
+          />
+        )}
       </div>
       <div className="flex flex-col justify-between flex-grow">
         <h1 className="text-2xl font-semibold">{product?.title}</h1>
@@ -24,13 +37,11 @@ const CartProductCard = ({ product }: { product: TList }) => {
         </div>
         <hr className="my-1" />
         <div className="flex items-center justify-between">
-          <h2>Price: {product?.price}</h2>
+          <h2>Price: {currencyFormatter(product?.price)}</h2>
           <div className="flex items-center gap-2">
-            <Trash className="text-[#B59175]" />
-            {/* <Button
-              // onClick={() => handleRemoveProduct(product?._id)}
-              variant="outline"
-            ></Button> */}
+            <button onClick={() => handleRemoveProductFromCart(product?._id)}>
+              <Trash className="text-[#B59175]" />
+            </button>
           </div>
         </div>
       </div>
