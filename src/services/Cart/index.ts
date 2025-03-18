@@ -61,3 +61,80 @@ export const verifyOrder = async (query: any) => {
     return Error(error.message);
   }
 };
+
+export const getMyPurchaseHistory = async (userId: string) => {
+  const token = await getValidToken();
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/transactions/purchases/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        next: {
+          tags: ["order"],
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const getMySalesHistory = async (userId: string) => {
+  const token = await getValidToken();
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/transactions/sales/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        next: {
+          tags: ["order"],
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const updateTransactionStatus = async (id: string) => {
+  const token = await getValidToken();
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/transactions/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    revalidateTag("order");
+
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};

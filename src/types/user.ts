@@ -12,3 +12,19 @@ export interface IUser {
   iat?: number;
   exp?: number;
 }
+
+export type TFetchedUser = {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+  image: string;
+  role: string;
+  status: string;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};

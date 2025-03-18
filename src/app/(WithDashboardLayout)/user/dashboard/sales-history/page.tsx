@@ -1,7 +1,9 @@
+import SalesHistory from "@/components/modules/dashboard/SalesHistory/SalesHistory";
+
 const SalesHistoryPage = () => {
   return (
     <div>
-      <h1>Sales History Page</h1>
+      <SalesHistory />
     </div>
   );
 };

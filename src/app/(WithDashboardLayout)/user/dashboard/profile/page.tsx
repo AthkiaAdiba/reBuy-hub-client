@@ -1,9 +1,9 @@
-import React from "react";
+import UserDetails from "@/components/modules/dashboard/User/UserDetails";
 
 const ProfilePage = () => {
   return (
     <div>
-      <h1>This is a profile page</h1>
+      <UserDetails />
     </div>
   );
 };

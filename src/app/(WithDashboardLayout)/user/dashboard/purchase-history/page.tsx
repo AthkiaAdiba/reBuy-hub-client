@@ -1,7 +1,9 @@
+import PurchaseHistory from "@/components/modules/dashboard/PurchaseHistory/PurchaseHistory";
+
 const PurchaseHistoryPage = () => {
   return (
     <div>
-      <h1>this is Purchase History Page</h1>
+      <PurchaseHistory />
     </div>
   );
 };
