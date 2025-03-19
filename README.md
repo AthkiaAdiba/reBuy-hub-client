@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TOBEL
 
-## Getting Started
+TOBEL is a robust fronted application designed to power the operations of an e-commerce platform specializing in secondHand products. Built with modern web technologies, and Nextjs framework, it provides a secure, scalable, and efficient fronted solution to manage data and handle client requests. It is a responsive application for all devices. There are admin and user role.
 
-First, run the development server:
+## 🚀 Fronted Live Demo
+
+https://rebuy-hub-client-new2.vercel.app
+
+## 🚀 Backend Live Demo
+
+https://rebuy-hub-server-1.vercel.app
+
+## ✨ Features
+
+- 🛠️ **CRUD Operations:** Full support for creating, reading, updating, and deleting products.
+
+- 🔑 **Token:** Refresh and access token are provided in login time.
+
+- 📦 **Error Handling:** If any error happens, error messages is provided.
+
+- 🗂️ **Categorization:** Filter, searching products by categories, name, and price range.
+
+- ⚙️ **Scalable Design:** Built to handle growing demands and datasets. It is also a responsive application.
+- 💳 **Secure Payment Integration:** Secure payment integration has been implemented with **Shurjopay**. Users can order their chose products.
+
+- 🔒 **Bcrypt Password Hashing:** Bcrypt password hashing has been implemented To secure users password.
+- 👥 **Admin Role:** Admin role has been implemented.
+
+## 🛠️ Technologies Used
+
+### Backend Framework
+
+- **Node.js:** High-performance runtime for building scalable applications.
+- **Express.js:** Framework for creating RESTful APIs efficiently.
+
+### Database
+
+- **MongoDB:** NoSQL database for secure and flexible data storage.
+- **Mongoose:** Elegant ODM for MongoDB, enabling schema validation and easy database interactions.
+
+### Development Tools
+
+- **TypeScript:** Ensures type safety, enhancing code maintainability.
+
+### Framework
+
+- **Nextjs:** This application was built with powerful Nextjs framework..
+
+### State Management
+
+- **@reduxjs/toolkit:** Simplifies state management with Redux.
+- **React Redux:** Official React bindings for Redux, enabling global state management.
+- **Redux Persist:** Persists and rehydrates the Redux store for better user experience.
+
+## ⚙️ Installation and Setup
+
+Follow these steps to set up and run the backend server locally:
+
+### Prerequisites
+
+- **Node.js** (v14 or higher)
+- **npm** (v6 or higher)
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/AthkiaAdiba/reBuy-hub-client
+cd reBuy-hub-client
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run the Fronted
+
+#### Development Mode
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Production Mode
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔗 Scripts
 
-## Learn More
+- `npm run dev`: Starts the development fronted with hot reloading.
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run build`: Compiles TypeScript into JavaScript.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run lint`: Checks code for linting issues.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributing
 
-## Deploy on Vercel
+Contributions are welcome! To contribute:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit (`git commit -m "Add feature"`)
+4. Push your changes (`git push origin feature-branch`).
+5. Open a Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📜 License
+
+This project is licensed under the **ISC License**.
+
+## 📞 Contact
+
+For any queries or feedback, feel free to reach out:
+Email: athkiaadiba@gmail.com
