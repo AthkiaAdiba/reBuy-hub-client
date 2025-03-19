@@ -1,8 +1,38 @@
-import MyButton from "@/components/shared/MyButton";
+"use client";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/UserContext";
+import { addProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { TList } from "@/types/list";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const ProductDetails = ({ product }: { product: TList }) => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { user } = useUser();
+
+  const handleAddProduct = (item: TList) => {
+    if (!user) {
+      router.push("/login");
+      throw new Error("Please log in first!");
+    }
+
+    if (user?.userId === item?.sellerId) {
+      toast.error("It is your Item. You can not buy!");
+      return;
+    }
+
+    if (item?.status === "sold") {
+      toast.error("This item is not available!");
+      return;
+    }
+
+    dispatch(addProduct(item));
+    toast.success("Your chosen product is added to the cart.");
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 my-5 font-sans">
       <div>
@@ -44,7 +74,13 @@ const ProductDetails = ({ product }: { product: TList }) => {
         <p className="text-justify font-light text-2xl mb-4">
           {product?.location}
         </p>
-        <MyButton label="ADD TO CART" />
+        <Button
+          onClick={() => handleAddProduct(product)}
+          variant="outline"
+          className="rounded-none px-8 font-sans py-4 text-[#B59175] border-[#B59175] hover:bg-[#B59175] hover:text-white"
+        >
+          ADD TO CART
+        </Button>
       </div>
     </div>
   );

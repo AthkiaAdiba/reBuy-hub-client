@@ -95,8 +95,8 @@ const RegisterForm = () => {
 
   return (
     <div className="border-2 border-[#B59175] flex-grow max-w-md w-full font-sans p-5">
-      <div className="flex items-center space-x-4 ">
-        Logo
+      <div className="flex text-3xl font-sans font-bold items-center space-x-4 ">
+        TOBEL
         <div>
           <h1 className="text-3xl font-semibold text-[#B59175]">Register</h1>
           <p className="font-extralight text-lg text-[#B59175]">

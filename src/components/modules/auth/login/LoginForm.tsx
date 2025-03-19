@@ -60,8 +60,8 @@ const LoginForm = () => {
 
   return (
     <div className="border-2 border-[#B59175] flex-grow max-w-md w-full p-5 font-sans">
-      <div className="flex items-center space-x-4 ">
-        Logo
+      <div className="flex text-3xl font-sans font-bold items-center space-x-4">
+        TOBEL
         <div>
           <h1 className="text-3xl font-semibold text-[#B59175]">Login</h1>
           <p className="font-extralight text-lg text-[#B59175]">

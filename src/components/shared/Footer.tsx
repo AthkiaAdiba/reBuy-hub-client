@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 py-28">
         {/* 1st row */}
         <div className="col-span-1 lg:col-span-2">
-          <h1 className="text-white text-4xl">LOGO</h1>
+          <h1 className="text-white text-4xl">TOBEL</h1>
           <p className="text-neutral-400 text-xl mt-3">
             We make interiors infused with the spirit of contemporary design and
             minimalist philosophies.

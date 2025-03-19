@@ -29,9 +29,7 @@ const Navbar = () => {
         {/* Navbar for large screens */}
         <div className="hidden lg:flex justify-between items-center py-4">
           <div className="flex items-center gap-6">
-            <div>
-              {/* <img src={logo} alt="" className="h-24 w-24" /> */}LOGO
-            </div>
+            <div className="text-3xl font-bold">TOBEL</div>
             <ul className="flex gap-10 text-2xl font-sans">
               {navLinks.map(({ href, label }) => (
                 <Link
@@ -81,9 +79,7 @@ const Navbar = () => {
                 <HiMenuAlt1></HiMenuAlt1>
               )}
             </button>
-            <div>
-              {/* <img src={logo} alt="" className="h-14 w-14" /> */}LOGO
-            </div>
+            <div className="text-3xl font-bold">TOBEL</div>
           </div>
           {user ? (
             <PopOver />
@@ -98,7 +94,7 @@ const Navbar = () => {
         {isDrawerOpen && (
           <div
             className={`lg:hidden absolute duration-1000 z-30 ${
-              isDrawerOpen ? "top-14" : "-top-96"
+              isDrawerOpen ? "top-18" : "-top-96"
             }`}
           >
             <ul className="space-y-4 p-4 flex flex-col bg-[#faf7f0] text-xl font-medium font-sans">
@@ -113,6 +109,9 @@ const Navbar = () => {
                   {label}
                 </Link>
               ))}
+              <Link href="/wishlist">
+                <FaRegHeart className="text-2xl" />
+              </Link>
               <Link href="/cart" className="relative">
                 <button className="flex items-center gap-2 text-lg font-medium">
                   <SlHandbag /> CART

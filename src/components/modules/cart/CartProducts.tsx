@@ -8,10 +8,9 @@ import { orderedProductsSelector } from "@/redux/features/cartSlice";
 
 const CartProducts = () => {
   const allItems = useAppSelector(orderedProductsSelector);
-  console.log(allItems);
 
   return (
-    <div className="border-2 border-white bg-background brightness-105 rounded-md col-span-8 h-full row-span-3 p-10 space-y-5">
+    <div className="border-2 border-white bg-background brightness-105 rounded-md lg:col-span-8 h-full row-span-3 p-2 lg:p-10 space-y-5">
       {allItems?.length === 0 && (
         <div className="text-center text-gray-500">
           <p className="text-lg font-semibold">Your cart is empty</p>
