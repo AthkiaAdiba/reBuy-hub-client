@@ -10,12 +10,15 @@ const ProductsPage = async ({
   searchParams: TSearchParams;
 }) => {
   const query = await searchParams;
-  const { data: allItems } = await getAllItems(query);
+  const page = query?.page;
+  const limit = 9;
+  const { data: allItems, meta } = await getAllItems(query, page, limit);
   const { data: allItemsForCategories } = await getAllItemsToGetCategories();
+
   return (
-    <div className="flex flex-col md:flex-row lg:flex-row gap-6 px-2 lg:px-16 mt-10">
+    <div className="flex flex-col md:flex-row lg:flex-row gap-6 px-2 lg:px-16 pt-24 md:pt-32 lg:pt-56">
       <FilterSidebar allItems={allItemsForCategories} />
-      <AllProducts allItems={allItems} />
+      <AllProducts allItems={allItems} meta={meta} />
     </div>
   );
 };

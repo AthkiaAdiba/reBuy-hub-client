@@ -81,7 +81,7 @@ const FilterSidebar = ({ allItems }: { allItems: TList[] }) => {
       <div className="mb-6">
         <h2 className="text-2xl font-semibold mb-4">Price</h2>
         <div className="flex items-center justify-between text-base mb-2">
-          <span>$0</span>
+          <span>{`$${price[0]}`}</span>
         </div>
         <Slider
           max={500000}

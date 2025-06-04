@@ -12,7 +12,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,10 +22,17 @@ import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const UpdateListModal = ({ item }: { item: TList }) => {
+const UpdateListModal = ({
+  item,
+  onClose,
+  open,
+}: {
+  item: TList;
+  onClose?: () => void;
+  open: boolean;
+}) => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
-  const [open, setOpen] = useState(false);
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -104,7 +110,7 @@ const UpdateListModal = ({ item }: { item: TList }) => {
       } else {
         toast.success(res?.message, { id: toastId });
         reset();
-        setOpen(false);
+        onClose?.();
       }
     } catch (err: any) {
       console.error(err.message);
@@ -113,10 +119,7 @@ const UpdateListModal = ({ item }: { item: TList }) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="bg-gray-900 text-white">Update Item</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Update Item</DialogTitle>

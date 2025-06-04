@@ -12,7 +12,7 @@ const ProductDetailsPage = async ({
   const product = productData?.data;
 
   return (
-    <div className="px-2 lg:px-16">
+    <div className="px-2 lg:px-16 pt-44">
       <ProductDetails product={product} />
     </div>
   );

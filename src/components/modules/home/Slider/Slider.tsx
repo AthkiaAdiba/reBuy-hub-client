@@ -13,10 +13,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // import required modules
 import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
 import MyButton from "@/components/shared/MyButton";
+import Link from "next/link";
 
 const Slider = () => {
   return (
-    <div className="px-2 lg:px-16 mt-8">
+    <div>
       <Swiper
         spaceBetween={30}
         effect={"fade"}
@@ -39,9 +40,11 @@ const Slider = () => {
                 <h2 className="text-white text-3xl md:text-7xl font-mono">
                   LOUNGE AESTHETIC
                 </h2>
-                <div className="flex justify-center mt-5">
-                  <MyButton label="DISCOVER" />
-                </div>
+                <Link href="/products">
+                  <div className="flex justify-center mt-5">
+                    <MyButton label="DISCOVER" />
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -54,9 +57,11 @@ const Slider = () => {
                 <h2 className="text-white text-2xl md:text-7xl font-mono">
                   NEVADA COLLECTION
                 </h2>
-                <div className="flex justify-center mt-5">
-                  <MyButton label="DISCOVER" />
-                </div>
+                <Link href="/products">
+                  <div className="flex justify-center mt-5">
+                    <MyButton label="DISCOVER" />
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -68,9 +73,11 @@ const Slider = () => {
                 <h2 className="text-white text-3xl md:text-7xl font-mono">
                   GRACEFULLY CHIC
                 </h2>
-                <div className="flex justify-center mt-5">
-                  <MyButton label="DISCOVER" />
-                </div>
+                <Link href="/products">
+                  <div className="flex justify-center mt-5">
+                    <MyButton label="DISCOVER" />
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

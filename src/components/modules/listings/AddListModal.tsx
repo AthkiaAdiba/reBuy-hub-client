@@ -106,7 +106,7 @@ const AddListModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gray-900 text-white">Add Item</Button>
+        <Button className="bg-[#00175f] text-white">Add Item</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>

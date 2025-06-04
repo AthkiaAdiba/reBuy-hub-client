@@ -28,9 +28,13 @@ export const createItem = async (itemData: FieldValues) => {
   }
 };
 
-export const getAllItems = async (query?: {
-  [key: string]: string | string[] | undefined;
-}) => {
+export const getAllItems = async (
+  query?: {
+    [key: string]: string | string[] | undefined;
+  },
+  page?: any,
+  limit?: any
+) => {
   const params = new URLSearchParams();
 
   if (query?.price) {
@@ -51,7 +55,7 @@ export const getAllItems = async (query?: {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/listings?${params}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/listings?page=${page}&limit=${limit}&${params}`,
       {
         next: {
           tags: ["item"],
@@ -102,7 +106,7 @@ export const getAllItemsOfOwner = async () => {
     );
 
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
 
     return data;
   } catch (error: any) {

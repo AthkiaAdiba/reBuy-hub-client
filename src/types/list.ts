@@ -12,4 +12,14 @@ export type TList = {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  sku?: string;
+  tags?: string[];
+  averageRating: number;
+};
+
+export type TMeta = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPage: number;
 };
