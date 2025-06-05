@@ -110,7 +110,8 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
                     <Image
                       src={item?.images[0]}
                       alt={item?.title}
-                      fill
+                      width={200}
+                      height={200}
                       className="object-cover rounded-md"
                     />
                   </div>

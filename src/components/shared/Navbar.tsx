@@ -22,8 +22,6 @@ const Navbar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  console.log(searchTerm);
-
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -235,6 +233,20 @@ const Navbar = () => {
             <div className="text-2xl font-bold">TOBEL</div>
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/wishlist" className="relative">
+              <FaRegHeart
+                className={`text-2xl hover:text-[#B59175] transition-colors ${
+                  pathname === "/"
+                    ? isScrolled
+                      ? "text-black"
+                      : "text-white"
+                    : "text-black"
+                }`}
+              />
+              <span className="absolute -top-2 -right-2 bg-[#B59175] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                0
+              </span>
+            </Link>
             <Link href="/cart" className="relative">
               <SlHandbag
                 className={`text-2xl ${
@@ -262,12 +274,12 @@ const Navbar = () => {
         {/* Mobile Drawer Menu */}
         {isDrawerOpen && (
           <div className="lg:hidden fixed inset-0 z-50 bg-white">
-            <div className="p-4">
+            <div className="p-4 overflow-y-auto h-full">
               <div className="flex justify-between items-center mb-6">
                 <div className="text-2xl font-bold">TOBEL</div>
                 <button
                   onClick={() => setIsDrawerOpen(false)}
-                  className="text-3xl"
+                  className="text-3xl text-black"
                 >
                   <RxCross1 />
                 </button>
@@ -276,7 +288,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search products..."
-                  className="w-full pl-10 pr-4 py-2 border rounded-full"
+                  className="w-full pl-10 pr-4 py-2 border rounded-full text-black placeholder-gray-400"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />

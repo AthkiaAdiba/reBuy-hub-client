@@ -4,20 +4,23 @@
 import { revalidateTag } from "next/cache";
 import { getValidToken } from "@/lib/verifyToken";
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (page?: any, limit?: any) => {
   const token = await getValidToken();
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-      next: {
-        tags: ["user"],
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/users?page=${page}&limit=${limit}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        next: {
+          tags: ["user"],
+        },
+      }
+    );
 
     const data = await res.json();
 

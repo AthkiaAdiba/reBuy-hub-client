@@ -30,9 +30,9 @@ const adminRoutes = [
     link: "/admin/dashboard/allproducts",
   },
   {
-    name: "Platform & Genre",
+    name: "Categories",
     icon: <MdCategory />,
-    link: "/dashboard/platformGenre",
+    link: "/admin/dashboard/categories",
   },
   { name: "Discount", icon: <MdDiscount />, link: "/dashboard/discount" },
   {
@@ -54,9 +54,14 @@ const userRoutes = [
     icon: <MdPerson />,
   },
   {
-    name: "Products",
+    name: "My Products",
     link: "/user/dashboard/products",
     icon: <MdReceipt />,
+  },
+  {
+    name: "Categories",
+    icon: <MdCategory />,
+    link: "/user/dashboard/categories",
   },
   {
     name: "Purchase History",
