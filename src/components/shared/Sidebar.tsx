@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
   MdCategory,
-  MdDiscount,
   MdMovie,
   MdRateReview,
   MdSpaceDashboard,
@@ -25,6 +24,11 @@ const adminRoutes = [
   { name: "Profile", icon: <MdMovie />, link: "/admin/dashboard/profile" },
   { name: "Users", icon: <FaUsers />, link: "/admin/dashboard/users" },
   {
+    name: "My Products",
+    link: "/admin/dashboard/myproducts",
+    icon: <MdReceipt />,
+  },
+  {
     name: "AllProducts",
     icon: <MdRateReview />,
     link: "/admin/dashboard/allproducts",
@@ -34,11 +38,20 @@ const adminRoutes = [
     icon: <MdCategory />,
     link: "/admin/dashboard/categories",
   },
-  { name: "Discount", icon: <MdDiscount />, link: "/dashboard/discount" },
+  {
+    name: "My Purchase History",
+    link: "/admin/dashboard/purchase-history",
+    icon: <MdMovie />,
+  },
+  {
+    name: "My Sales History",
+    link: "/admin/dashboard/sales-history",
+    icon: <MdRateReview />,
+  },
   {
     name: "Subscribers",
     icon: <MdSubscriptions />,
-    link: "/dashboard/subscribers",
+    link: "/admin/dashboard/subscribers",
   },
 ];
 

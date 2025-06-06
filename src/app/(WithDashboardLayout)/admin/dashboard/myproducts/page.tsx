@@ -6,7 +6,7 @@ import { getAllItemsOfOwner } from "@/services/Listings";
 
 type TSearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-const dashboardProductsPage = async ({
+const AdminProductsDashboardPage = async ({
   searchParams,
 }: {
   searchParams: TSearchParams;
@@ -36,4 +36,4 @@ const dashboardProductsPage = async ({
   );
 };
 
-export default dashboardProductsPage;
+export default AdminProductsDashboardPage;
