@@ -77,7 +77,18 @@ const ProductDetails = ({ product }: { product: TList }) => {
             {product?.title || "Product Title"}
           </h2>
           <h2 className="text-2xl text-gray-700 mb-3">
-            $ {product?.price || "0.00"}
+            {product?.offerPrice && product.offerPrice > 0 ? (
+              <div className="flex items-center gap-2">
+                <span className="line-through text-gray-500">
+                  $ {product?.price || "0.00"}
+                </span>
+                <span className="text-[#B59175]">
+                  $ {(product.price - product.offerPrice).toFixed(2)}
+                </span>
+              </div>
+            ) : (
+              <span>$ {product?.price || "0.00"}</span>
+            )}
           </h2>
           {/* Star Rating and Average Ratings */}
           <div className="flex items-center mb-4">
@@ -101,7 +112,7 @@ const ProductDetails = ({ product }: { product: TList }) => {
 
             <p className="mb-1">
               <span className="font-medium text-black">CATEGORY:</span>{" "}
-              {product?.category}
+              {product?.category?.categoryName}
             </p>
             <p className="mb-1">
               <span className="font-medium text-black">LOCATION:</span>{" "}

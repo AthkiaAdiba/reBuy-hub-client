@@ -6,25 +6,25 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { statusArray } from "@/constants/products";
-import { TList } from "@/types/list";
+import { TFetchedCategory } from "@/types/category";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const FilterSidebar = ({ allItems }: { allItems: TList[] }) => {
+const FilterSidebar = ({ categories }: { categories: TFetchedCategory[] }) => {
   const [price, setPrice] = useState([0]);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const categoriesArray = [
-    ...new Map(
-      allItems?.map((item) => [
-        item.category,
-        { category: item.category, _id: item._id },
-      ])
-    ).values(),
-  ];
+  // const categoriesArray = [
+  //   ...new Map(
+  //     allItems?.map((item) => [
+  //       item.category,
+  //       { category: item.category, _id: item._id },
+  //     ])
+  //   ).values(),
+  // ];
 
   const handleSearchQuery = (query: string, value: string | number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -98,23 +98,19 @@ const FilterSidebar = ({ allItems }: { allItems: TList[] }) => {
       <div className="mb-6">
         <h2 className="text-2xl font-semibold mb-4">Item Category</h2>
         <RadioGroup className="space-y-2">
-          {categoriesArray?.map(
-            (category: { category: string; _id: string }) => (
-              <div key={category._id} className="flex items-center space-x-2">
-                <RadioGroupItem
-                  onClick={() =>
-                    handleSearchQuery("category", category?.category)
-                  }
-                  value={category?.category}
-                  id={category?.category}
-                  className="h-6 w-6 border-2 border-[#B59175] text-[#B59175]  data-[state=checked]:border-[#B59175]"
-                />
-                <Label htmlFor={category?.category} className="text-xl">
-                  {category?.category}
-                </Label>
-              </div>
-            )
-          )}
+          {categories?.map((category) => (
+            <div key={category._id} className="flex items-center space-x-2">
+              <RadioGroupItem
+                onClick={() => handleSearchQuery("category", category?._id)}
+                value={category?._id}
+                id={category?._id}
+                className="h-6 w-6 border-2 border-[#B59175] text-[#B59175]  data-[state=checked]:border-[#B59175]"
+              />
+              <Label htmlFor={category?.categoryName} className="text-xl">
+                {category?.categoryName}
+              </Label>
+            </div>
+          ))}
         </RadioGroup>
       </div>
       {/* Brands */}

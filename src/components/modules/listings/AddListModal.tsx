@@ -6,22 +6,17 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import ImagePreviewer from "@/components/ui/core/MyImageUploader/ImagePreviewer";
 import ImageUploader from "@/components/ui/core/MyImageUploader/ImageUploader";
 import { toast } from "sonner";
 import { createItem } from "@/services/Listings";
+import { TFetchedCategory } from "@/types/category";
 
-const AddListModal = () => {
+const AddListModal = ({ categories }: { categories: TFetchedCategory[] }) => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
   const [open, setOpen] = useState(false);
@@ -31,6 +26,11 @@ const AddListModal = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const categoriesOptions = categories?.map((category) => ({
+    value: category._id,
+    label: category.categoryName,
+  }));
 
   const upload_preset = "stationary_shop";
   const cloud_name = "dv6fgvj2c";
@@ -86,9 +86,8 @@ const AddListModal = () => {
       const res = await createItem({
         ...formData,
         price: Number(formData.price),
+        quantity: Number(formData.quantity),
       });
-
-      //   console.log(res);
 
       if (!res.success) {
         toast.error(res?.message, { id: toastId });
@@ -96,6 +95,8 @@ const AddListModal = () => {
         toast.success(res?.message, { id: toastId });
         reset();
         setOpen(false);
+        setImageFiles([]);
+        setImagePreview([]);
       }
     } catch (err: any) {
       console.error(err.message);
@@ -108,125 +109,145 @@ const AddListModal = () => {
       <DialogTrigger asChild>
         <Button className="bg-[#00175f] text-white">Add Item</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add Item</DialogTitle>
-          <DialogDescription className="sr-only">
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4 py-4">
-            {/* field 1 */}
-            <div>
-              <Label htmlFor="title" className="text-right mb-3">
-                Item Title:
-              </Label>
-              <Input
-                id="title"
-                type="text"
-                className="col-span-3"
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogTitle className="sr-only">Add New Item</DialogTitle>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-8 max-h-[90vh] overflow-y-auto"
+        >
+          <h2 className="text-2xl font-bold mb-6 text-[#00175f]">
+            Add New Item
+          </h2>
+
+          {/* Image Upload */}
+          <div className="mb-6">
+            <div className="border-2 border-dashed border-[#1a2d6d] rounded-xl p-4">
+              <ImageUploader
+                setImageFiles={setImageFiles}
+                setImagePreview={setImagePreview}
+                label="Upload Your Images"
+                className="w-fit mt-0"
+              />
+              <ImagePreviewer
+                className="flex flex-wrap gap-4 mt-4"
+                setImageFiles={setImageFiles}
+                imagePreview={imagePreview}
+                setImagePreview={setImagePreview}
+              />
+            </div>
+          </div>
+
+          {/* Form Grid */}
+          <div className="grid grid-cols-1 gap-6">
+            <div className="space-y-4">
+              <input
                 {...register("title", { required: true })}
+                placeholder="Item Title"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
               />
               {errors.title && (
                 <p className="text-red-500">Item title is required!</p>
               )}
             </div>
 
-            {/* field 2 */}
-            <div>
-              <Label htmlFor="description" className="text-right mb-3">
-                Description:
-              </Label>
-              <Textarea
-                placeholder="Write item description"
+            <div className="space-y-4">
+              <textarea
                 {...register("description", { required: true })}
+                placeholder="Item Description"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg min-h-[100px]"
               />
               {errors.description && (
                 <p className="text-red-500">Item description is required!</p>
               )}
             </div>
 
-            {/* field 3 */}
-            <div>
-              <Label htmlFor="price" className="text-right mb-3">
-                Price:
-              </Label>
-              <Input
-                type="number"
-                id="price"
-                className="col-span-3"
-                {...register("price", { required: true })}
-              />
-              {errors.price && (
-                <p className="text-red-500">Item price is required!</p>
-              )}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <input
+                  type="number"
+                  {...register("price", { required: true })}
+                  placeholder="Price"
+                  className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
+                />
+                {errors.price && (
+                  <p className="text-red-500">Item price is required!</p>
+                )}
+              </div>
+
+              <div className="space-y-4">
+                <input
+                  type="number"
+                  {...register("quantity", { required: true })}
+                  placeholder="Quantity"
+                  className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
+                />
+                {errors.quantity && (
+                  <p className="text-red-500">Item quantity is required!</p>
+                )}
+              </div>
             </div>
 
-            {/* field 4 */}
-            <div>
-              <Label htmlFor="condition" className="text-right mb-3">
-                Condition:
-              </Label>
-              <Textarea
-                placeholder="Write item condition"
+            <div className="space-y-4">
+              <textarea
                 {...register("condition", { required: true })}
+                placeholder="Item Condition"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg min-h-[100px]"
               />
               {errors.condition && (
                 <p className="text-red-500">Item condition is required!</p>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4 ">
-              <ImageUploader
-                setImageFiles={setImageFiles}
-                setImagePreview={setImagePreview}
-                label="Upload Your Image"
-                className="w-fit mt-0"
-              />
-              <ImagePreviewer
-                className="flex flex-wrap gap-4"
-                setImageFiles={setImageFiles}
-                imagePreview={imagePreview}
-                setImagePreview={setImagePreview}
-              />
-            </div>
-
-            {/* field 5 */}
-            <div>
-              <Label htmlFor="category" className="text-right mb-3">
-                Item Category:
-              </Label>
-              <Input
-                id="category"
-                type="text"
-                className="col-span-3"
+            <div className="space-y-4">
+              <select
                 {...register("category", { required: true })}
-              />
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
+              >
+                <option value="">Select a category</option>
+                {categoriesOptions?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
               {errors.category && (
                 <p className="text-red-500">Item category is required!</p>
               )}
             </div>
 
-            {/* field 6 */}
-            <div>
-              <Label htmlFor="location" className="text-right mb-3">
-                Item Location:
-              </Label>
-              <Input
-                id="location"
-                type="text"
-                className="col-span-3"
+            <div className="space-y-4">
+              <input
                 {...register("location", { required: true })}
+                placeholder="Item Location"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
               />
               {errors.location && (
                 <p className="text-red-500">Item location is required!</p>
               )}
             </div>
           </div>
-          <DialogFooter>
-            <Button type="submit">Add Item</Button>
-          </DialogFooter>
+
+          {/* Form Buttons */}
+          <div className="mt-8 flex justify-end gap-4">
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                reset();
+                setImageFiles([]);
+                setImagePreview([]);
+              }}
+              className="px-6 py-2 cursor-pointer rounded-lg bg-white border-2"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="text-sm lg:text-base bg-[#1a2d6d] text-white cursor-pointer py-1 px-4 lg:px-6 lg:py-2 rounded-lg transition-colors"
+            >
+              Add Item
+            </button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

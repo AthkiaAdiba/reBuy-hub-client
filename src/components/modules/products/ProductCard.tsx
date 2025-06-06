@@ -79,6 +79,15 @@ const ProductCard = ({ item }: { item: TList }) => {
           </span>
         </div>
 
+        {/* Discount Badge */}
+        {item?.offerPrice > 0 && (
+          <div className="absolute top-4 left-4 z-10">
+            <span className="px-3 py-1 text-sm font-medium uppercase bg-white text-[#B59175] rounded-sm shadow-md border border-[#B59175]">
+              {Math.round((item.offerPrice / item.price) * 100)}% OFF
+            </span>
+          </div>
+        )}
+
         {/* Product Info Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white translate-y-full transition-transform duration-300 group-hover:translate-y-0 z-10">
           <Link href={`/products/${item?._id}`}>
@@ -87,8 +96,24 @@ const ProductCard = ({ item }: { item: TList }) => {
             </h3>
           </Link>
           <div className="flex justify-between items-center mb-12">
-            <span className="text-sm">{item?.category}</span>
-            <span className="text-lg font-semibold">${item?.price}</span>
+            <span className="text-lg">{item?.category?.categoryName}</span>
+            <div className="flex flex-col items-end">
+              {item?.offerPrice > 0 ? (
+                <>
+                  <span className="text-lg font-semibold">
+                    ${(item?.price - item?.offerPrice).toFixed(2)}
+                  </span>
+                  <span className="text-sm line-through text-gray-300">
+                    ${item?.price}
+                  </span>
+                  <span className="text-sm text-green-400">
+                    Offer: ${item?.offerPrice}
+                  </span>
+                </>
+              ) : (
+                <span className="text-lg font-semibold">${item?.price}</span>
+              )}
+            </div>
           </div>
         </div>
 

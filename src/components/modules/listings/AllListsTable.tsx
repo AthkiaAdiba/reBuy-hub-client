@@ -25,8 +25,17 @@ import {
 } from "@/components/ui/tooltip";
 import ConfirmModal from "../../modals/ConfirmModal";
 import DeleteListModal from "@/components/modals/DeleteListModal";
+import { TFetchedCategory } from "@/types/category";
+import { IoIosPricetags } from "react-icons/io";
+import AddOfferPriceModal from "./AddOfferPriceModal";
 
-const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
+const AllListsTable = ({
+  allItemsOfOwner,
+  categories,
+}: {
+  allItemsOfOwner: TList[];
+  categories: TFetchedCategory[];
+}) => {
   const [deleteListModalOpen, setDeleteListModalOpen] = useState<{
     open: boolean;
     id: string | null;
@@ -37,6 +46,9 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
     id: string | null;
   }>({ open: false, id: null });
 
+  const [isAddOfferPriceModalOpen, setIsAddOfferPriceModalOpen] =
+    useState(false);
+
   const [updateModalOpen, setUpdateModalOpen] = useState<{
     open: boolean;
     item: TList | null;
@@ -46,6 +58,11 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
 
   const handleStatusChange = async (id: string) => {
     setStatusModalOpen({ open: true, id });
+  };
+
+  const handleAddOrRemoveOfferPriceModalClose = () => {
+    setIsAddOfferPriceModalOpen(false);
+    setItem(null);
   };
 
   const confirmStatusChange = async () => {
@@ -98,6 +115,7 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
               <TableHead className="text-white">Image</TableHead>
               <TableHead className="text-white">Title</TableHead>
               <TableHead className="text-white">Price</TableHead>
+              <TableHead className="text-white">Offer Price</TableHead>
               <TableHead className="text-white">Status</TableHead>
               <TableHead className="text-white text-right">Actions</TableHead>
             </TableRow>
@@ -121,6 +139,9 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
                 </TableCell>
                 <TableCell className="py-2 px-3 align-middle">
                   ${item?.price}
+                </TableCell>
+                <TableCell className="py-2 px-3 align-middle">
+                  ${item?.offerPrice}
                 </TableCell>
                 <TableCell className="py-2 px-3 align-middle">
                   <span
@@ -190,6 +211,27 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              setIsAddOfferPriceModalOpen(true);
+                              setItem(item);
+                            }}
+                            className="hover:bg-[#00175f]/60 text-gray-500 dark:text-gray-300 hover:text-[#010527] transition-colors h-8 w-8"
+                          >
+                            <IoIosPricetags className="h-4 w-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Add Or Remove OfferPrice</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                 </TableCell>
               </TableRow>
@@ -219,6 +261,7 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
           item={updateModalOpen.item}
           open={updateModalOpen.open}
           onClose={() => setUpdateModalOpen({ open: false, item: null })}
+          categories={categories}
         />
       )}
 
@@ -229,6 +272,16 @@ const AllListsTable = ({ allItemsOfOwner }: { allItemsOfOwner: TList[] }) => {
           setDeleteListModalOpen({ open: false, id: null })
         }
       />
+
+      {/* Add or Remove Offer price */}
+      {isAddOfferPriceModalOpen && item && (
+        <AddOfferPriceModal
+          item={item}
+          handleAddOrRemoveOfferPriceModalClose={
+            handleAddOrRemoveOfferPriceModalClose
+          }
+        />
+      )}
     </div>
   );
 };

@@ -87,12 +87,12 @@ export const getAllItemsToGetCategories = async () => {
   }
 };
 
-export const getAllItemsOfOwner = async () => {
+export const getAllItemsOfOwner = async (page?: any, limit?: any) => {
   const token = await getValidToken();
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/listings/owner-items`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/listings/owner-items?page=${page}&limit=${limit}`,
       {
         method: "GET",
         headers: {
@@ -141,6 +141,31 @@ export const updateItem = async (data: any) => {
       `${process.env.NEXT_PUBLIC_BASE_API}/listings/${data.itemId}`,
       {
         method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(data?.data),
+      }
+    );
+
+    const result = await res.json();
+
+    revalidateTag("item");
+
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const addOrRemoveOfferPrice = async (data: any) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/listings/${data.itemId}/offer-price`,
+      {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: token,

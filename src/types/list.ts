@@ -1,13 +1,16 @@
+import { TFetchedCategory } from "./category";
+
 export type TList = {
   _id: string;
   title: string;
   description: string;
   price: number;
+  offerPrice: number;
   condition: string;
   images: string[];
   sellerId: string;
   status: string;
-  category: string;
+  category: TFetchedCategory;
   location: string;
   createdAt: string;
   updatedAt: string;
@@ -15,6 +18,7 @@ export type TList = {
   sku?: string;
   tags?: string[];
   averageRating: number;
+  quantity: number;
 };
 
 export type TMeta = {

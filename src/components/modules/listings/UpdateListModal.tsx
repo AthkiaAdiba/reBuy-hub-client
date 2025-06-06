@@ -2,22 +2,12 @@
 
 "use client";
 
-import { Button } from "@/components/ui/button";
 import ImagePreviewer from "@/components/ui/core/MyImageUploader/ImagePreviewer";
 import ImageUploader from "@/components/ui/core/MyImageUploader/ImageUploader";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { updateItem } from "@/services/Listings";
 import { TList } from "@/types/list";
+import { TFetchedCategory } from "@/types/category";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -26,10 +16,12 @@ const UpdateListModal = ({
   item,
   onClose,
   open,
+  categories,
 }: {
   item: TList;
   onClose?: () => void;
   open: boolean;
+  categories: TFetchedCategory[];
 }) => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
@@ -39,19 +31,26 @@ const UpdateListModal = ({
       title: item?.title,
       description: item?.description,
       price: item?.price,
+      quantity: item?.quantity,
       condition: item?.condition,
-      category: item?.category,
+      category: item?.category?._id,
       location: item?.location,
     },
   });
+
+  const categoriesOptions = categories?.map((category) => ({
+    value: category._id,
+    label: category.categoryName,
+  }));
 
   useEffect(() => {
     reset({
       title: item?.title,
       description: item?.description,
       price: item?.price,
+      quantity: item?.quantity,
       condition: item?.condition,
-      category: item?.category,
+      category: item?.category?._id,
       location: item?.location,
     });
   }, [item, reset]);
@@ -64,12 +63,16 @@ const UpdateListModal = ({
       duration: 2000,
     });
 
-    console.log(formData);
-
     try {
       let uploadedImages: string[] = [];
 
       if (imageFiles.length > 0) {
+        if (imageFiles.length !== 3) {
+          toast.error("Please upload exactly 3 images for your item", {
+            id: toastId,
+          });
+        }
+
         uploadedImages = await Promise.all(
           imageFiles.map(async (imageFile) => {
             const imageData = new FormData();
@@ -93,17 +96,27 @@ const UpdateListModal = ({
         }
       }
 
+      // Only include fields that have been changed
+      const updatedFields: any = {};
+      Object.keys(formData).forEach((key) => {
+        if (formData[key] !== undefined && formData[key] !== "") {
+          updatedFields[key] = formData[key];
+        }
+      });
+
       const itemData = {
         data: {
-          ...formData,
-          price: Number(formData.price),
+          ...updatedFields,
+          ...(updatedFields.price && { price: Number(updatedFields.price) }),
+          ...(updatedFields.quantity && {
+            quantity: Number(updatedFields.quantity),
+          }),
           ...(uploadedImages.length > 0 && { images: uploadedImages }),
         },
         itemId: item?._id,
       };
 
       const res = await updateItem(itemData);
-      console.log(res);
 
       if (!res.success) {
         toast.error(res?.message, { id: toastId });
@@ -120,101 +133,124 @@ const UpdateListModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Update Item</DialogTitle>
-          <DialogDescription className="sr-only">
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4 py-4">
-            {/* field 1 */}
-            <div>
-              <Label htmlFor="title" className="text-right mb-3">
-                Item Title:
-              </Label>
-              <Input
-                id="title"
-                type="text"
-                className="col-span-3"
-                {...register("title")}
-              />
-            </div>
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogTitle className="sr-only">Update Item</DialogTitle>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-8 max-h-[90vh] overflow-y-auto"
+        >
+          <h2 className="text-2xl font-bold mb-6 text-[#00175f]">
+            Update Item
+          </h2>
 
-            {/* field 2 */}
-            <div>
-              <Label htmlFor="description" className="text-right mb-3">
-                Description:
-              </Label>
-              <Textarea {...register("description")} />
-            </div>
-
-            {/* field 3 */}
-            <div>
-              <Label htmlFor="price" className="text-right mb-3">
-                Price:
-              </Label>
-              <Input
-                type="number"
-                id="price"
-                className="col-span-3"
-                {...register("price")}
-              />
-            </div>
-
-            {/* field 4 */}
-            <div>
-              <Label htmlFor="condition" className="text-right mb-3">
-                Condition:
-              </Label>
-              <Textarea {...register("condition")} />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 ">
+          {/* Image Upload */}
+          <div className="mb-6">
+            <div className="border-2 border-dashed border-[#1a2d6d] rounded-xl p-4">
               <ImageUploader
                 setImageFiles={setImageFiles}
                 setImagePreview={setImagePreview}
-                label="Upload Your Image"
+                label="Upload Your Images"
                 className="w-fit mt-0"
               />
               <ImagePreviewer
-                className="flex flex-wrap gap-4"
+                className="flex flex-wrap gap-4 mt-4"
                 setImageFiles={setImageFiles}
                 imagePreview={imagePreview}
                 setImagePreview={setImagePreview}
               />
             </div>
+          </div>
 
-            {/* field 5 */}
-            <div>
-              <Label htmlFor="category" className="text-right mb-3">
-                Item Category:
-              </Label>
-              <Input
-                id="category"
-                type="text"
-                className="col-span-3"
-                {...register("category")}
+          {/* Form Grid */}
+          <div className="grid grid-cols-1 gap-6">
+            <div className="space-y-4">
+              <input
+                {...register("title")}
+                placeholder="Item Title"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
               />
             </div>
 
-            {/* field 6 */}
-            <div>
-              <Label htmlFor="location" className="text-right mb-3">
-                Item Location:
-              </Label>
-              <Input
-                id="location"
-                type="text"
-                className="col-span-3"
+            <div className="space-y-4">
+              <textarea
+                {...register("description")}
+                placeholder="Item Description"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg min-h-[100px]"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <input
+                  type="number"
+                  {...register("price")}
+                  placeholder="Price"
+                  className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <input
+                  type="number"
+                  {...register("quantity")}
+                  placeholder="Quantity"
+                  className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <textarea
+                {...register("condition")}
+                placeholder="Item Condition"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg min-h-[100px]"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <select
+                {...register("category")}
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
+              >
+                <option value="">Select a category</option>
+                {categoriesOptions?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-4">
+              <input
                 {...register("location")}
+                placeholder="Item Location"
+                className="w-full px-4 py-2 border border-[#1a2d6d] rounded-lg"
               />
             </div>
           </div>
-          <DialogFooter>
-            <Button type="submit">Update Item</Button>
-          </DialogFooter>
+
+          {/* Form Buttons */}
+          <div className="mt-8 flex justify-end gap-4">
+            <button
+              type="button"
+              onClick={() => {
+                onClose?.();
+                reset();
+                setImageFiles([]);
+                setImagePreview([]);
+              }}
+              className="px-6 py-2 cursor-pointer rounded-lg bg-white border-2"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="text-sm lg:text-base bg-[#1a2d6d] text-white cursor-pointer py-1 px-4 lg:px-6 lg:py-2 rounded-lg transition-colors"
+            >
+              Update Item
+            </button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

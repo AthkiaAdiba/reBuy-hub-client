@@ -1,5 +1,6 @@
 "use client";
 
+import { TFetchedCategory } from "@/types/category";
 import Image from "next/image";
 import { useRef } from "react";
 import "swiper/css";
@@ -7,61 +8,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-type TCategorySlide = {
-  id: number;
-  categoryName: string;
-  image: string;
-};
-
-const categoriesSlides: TCategorySlide[] = [
-  {
-    id: 1,
-    categoryName: "Chairs",
-    image: "/images/categories/armchair1.jpg",
-  },
-  {
-    id: 2,
-    categoryName: "Bedroom",
-    image: "/images/categories/bedroom.webp",
-  },
-  {
-    id: 3,
-    categoryName: "Dinning Room",
-    image: "/images/categories/diningroom.webp",
-  },
-  {
-    id: 4,
-    categoryName: "Garden",
-    image: "/images/categories/garden.jpg",
-  },
-  {
-    id: 5,
-    categoryName: "Kitchen",
-    image: "/images/categories/kitchen.jpg",
-  },
-  {
-    id: 6,
-    categoryName: "Lamps",
-    image: "/images/categories/lamps.webp",
-  },
-  {
-    id: 7,
-    categoryName: "Living Room",
-    image: "/images/categories/livingroom.jpg",
-  },
-  {
-    id: 8,
-    categoryName: "Office",
-    image: "/images/categories/office.webp",
-  },
-  {
-    id: 9,
-    categoryName: "Vase",
-    image: "/images/categories/vase.jpg",
-  },
-];
-
-const Categories = () => {
+const Categories = ({ categories }: { categories: TFetchedCategory[] }) => {
   const ref = useRef(null);
 
   return (
@@ -109,13 +56,13 @@ const Categories = () => {
             style={{ padding: "40px 0" }}
             className="pl-8"
           >
-            {categoriesSlides.map((category) => (
-              <SwiperSlide key={category.id}>
+            {categories.map((category: TFetchedCategory) => (
+              <SwiperSlide key={category._id}>
                 <div className="flex flex-col items-center justify-center cursor-pointer group">
                   <div className="relative">
                     <div className="rounded-full overflow-hidden border-4 border-[#B59175] transition-all duration-300 group-hover:border-[#8B6B5A] w-[280px] h-[280px] group-hover:rotate-3">
                       <Image
-                        src={category.image}
+                        src={category.categoryImage}
                         alt={category.categoryName}
                         height={280}
                         width={280}
