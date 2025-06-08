@@ -19,7 +19,7 @@ const HomePage = async () => {
       <FeaturedLists allItems={allItems} />
       <HomeService />
       <Brands />
-      <OfferSection />
+      <OfferSection allItems={allItems} />
       <Newsletter />
     </div>
   );

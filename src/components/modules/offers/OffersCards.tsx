@@ -1,23 +1,11 @@
-import MyButton from "@/components/shared/MyButton";
 import { TList } from "@/types/list";
 import Link from "next/link";
 
-const OfferSection = ({ allItems }: { allItems: TList[] }) => {
+const OffersCards = ({ allItems }: { allItems: TList[] }) => {
   const offeredItems = allItems.filter((item) => item.offerPrice > 0);
 
-  // const offersData = offeredItems.map((item) => ({
-  //   id: item._id,
-  //   productName: item.title,
-  //   productPercentage: Math.round((item.offerPrice / item.price) * 100),
-  //   image: item.images[0] || "/images/placeholder.jpg",
-  //   link: `/product/${item._id}`,
-  // }));
-
   return (
-    <div className="px-2 lg:px-16 pt-12">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#B59175] mb-8">
-        Special Offers
-      </h2>
+    <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {offeredItems.map((offer) => (
           <div
@@ -40,7 +28,7 @@ const OfferSection = ({ allItems }: { allItems: TList[] }) => {
                   {offer?.title}
                 </h3>
               </div>
-              <a
+              <Link
                 href={`/products/${offer._id}`}
                 className="mt-4 inline-flex items-center text-white font-semibold group/link"
               >
@@ -48,19 +36,13 @@ const OfferSection = ({ allItems }: { allItems: TList[] }) => {
                 <span className="ml-2 transition-transform group-hover/link:translate-x-1">
                   →
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="flex justify-center mt-12">
-        <Link href="/offers">
-          <MyButton label="View All Offers" />
-        </Link>
       </div>
     </div>
   );
 };
 
-export default OfferSection;
+export default OffersCards;
