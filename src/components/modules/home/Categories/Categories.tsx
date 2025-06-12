@@ -7,9 +7,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useRouter } from "next/navigation";
 
 const Categories = ({ categories }: { categories: TFetchedCategory[] }) => {
   const ref = useRef(null);
+  const router = useRouter();
+
+  const handleCategoryClick = (categoryId: string) => {
+    router.push(`/products?category=${categoryId}`);
+  };
 
   return (
     <div className="md:w-[90%] w-[95%] mx-auto pt-32">
@@ -58,7 +64,10 @@ const Categories = ({ categories }: { categories: TFetchedCategory[] }) => {
           >
             {categories.map((category: TFetchedCategory) => (
               <SwiperSlide key={category._id}>
-                <div className="flex flex-col items-center justify-center cursor-pointer group">
+                <div
+                  className="flex flex-col items-center justify-center cursor-pointer group"
+                  onClick={() => handleCategoryClick(category._id)}
+                >
                   <div className="relative">
                     <div className="rounded-full overflow-hidden border-4 border-[#B59175] transition-all duration-300 group-hover:border-[#8B6B5A] w-[280px] h-[280px] group-hover:rotate-3">
                       <Image

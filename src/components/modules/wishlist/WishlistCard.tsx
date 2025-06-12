@@ -59,7 +59,9 @@ const WishlistCard = ({ wishlist }: { wishlist: TList }) => {
         <div className="flex gap-5 my-2">
           <p>
             <span className="text-gray-500">Category:</span>
-            <span className="font-semibold">{wishlist?.category}</span>
+            <span className="font-semibold">
+              {wishlist?.category?.categoryName}
+            </span>
           </p>
         </div>
         <hr className="my-1" />

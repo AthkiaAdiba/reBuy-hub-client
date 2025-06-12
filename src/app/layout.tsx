@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         cz-shortcut-listen="true"
-        data-new-gr-c-s-check-loaded="14.1238.0"
+        data-new-gr-c-s-check-loaded="14.1239.0"
         data-gr-ext-installed=""
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

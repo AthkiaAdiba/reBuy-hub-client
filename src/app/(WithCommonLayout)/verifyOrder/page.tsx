@@ -13,7 +13,7 @@ const VerifyOrderPage = async ({
   const orderData = order[0];
 
   return (
-    <div>
+    <div className="px-2 lg:px-16 pt-[30%] md:pt-[18%] lg:pt-[20%] xl:pt-[13%]">
       <OrderCard orderData={orderData} />
     </div>
   );

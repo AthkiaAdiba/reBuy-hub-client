@@ -11,16 +11,29 @@ import MyButton from "./MyButton";
 import { useUser } from "@/context/UserContext";
 import { useAppSelector } from "@/redux/hooks";
 import { orderedProductsSelector } from "@/redux/features/cartSlice";
+import { wishlistProductsSelector } from "@/redux/features/wishlistSlice";
+import { getAllCategories } from "@/services/Categories";
+import { TFetchedCategory } from "@/types/category";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [categories, setCategories] = useState<TFetchedCategory[]>([]);
   const pathname = usePathname();
   const { user } = useUser();
   const allItems = useAppSelector(orderedProductsSelector);
+  const wishlistItems = useAppSelector(wishlistProductsSelector);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await getAllCategories();
+      setCategories(data);
+    };
+    fetchCategories();
+  }, []);
 
   // Handle scroll effect
   useEffect(() => {
@@ -54,20 +67,39 @@ const Navbar = () => {
 
   const megaMenuCategories = [
     {
-      title: "Women's Fashion",
-      items: ["Dresses", "Tops", "Bottoms", "Accessories", "Footwear"],
+      title: "Bed Room",
+      categoryId: categories?.find((cat) => cat.categoryName === "Bedroom")
+        ?._id,
+      items: ["Beds", "Frames", "Cabinet", "Dressers", "Nightstands"],
     },
     {
-      title: "Men's Fashion",
-      items: ["Shirts", "Pants", "Suits", "Accessories", "Footwear"],
+      title: "Living Room",
+      categoryId: categories?.find((cat) => cat.categoryName === "Living Room")
+        ?._id,
+      items: ["Coffee Table", "Sofa", "Bookshelf", "Magazine Rack", "TV Stand"],
     },
     {
-      title: "Electronics",
-      items: ["Phones", "Laptops", "Tablets", "Accessories", "Gadgets"],
+      title: "Office",
+      categoryId: categories?.find((cat) => cat.categoryName === "Office")?._id,
+      items: [
+        "Writing Desk",
+        "Office Chair",
+        "Filing Cabinet",
+        "Bookcase",
+        "Meeting Table",
+      ],
     },
     {
-      title: "Home & Living",
-      items: ["Furniture", "Decor", "Kitchen", "Bath", "Lighting"],
+      title: "Kitchen",
+      categoryId: categories?.find((cat) => cat.categoryName === "Kitchen")
+        ?._id,
+      items: [
+        "Kitchen Cabinets",
+        "Dining Table",
+        "Sideboard",
+        "Microwave Stand",
+        "Kitchen Counter",
+      ],
     },
   ];
 
@@ -126,13 +158,18 @@ const Navbar = () => {
                         {megaMenuCategories.map((category) => (
                           <div key={category.title} className="min-w-[250px]">
                             <h3 className="font-bold text-lg mb-4 text-black">
-                              {category.title}
+                              <Link
+                                href={`/products?category=${category.categoryId}`}
+                                className="hover:text-[#B59175]"
+                              >
+                                {category.title}
+                              </Link>
                             </h3>
                             <ul className="space-y-2">
                               {category.items.map((item) => (
                                 <li key={item}>
                                   <Link
-                                    href={`/category/${item.toLowerCase()}`}
+                                    href={`/products?category=${category.categoryId}`}
                                     className="text-gray-600 hover:text-[#B59175]"
                                   >
                                     {item}
@@ -199,7 +236,7 @@ const Navbar = () => {
                 }`}
               />
               <span className="absolute -top-2 -right-2 bg-[#B59175] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                0
+                {wishlistItems?.length || 0}
               </span>
             </Link>
             <Link href="/cart" className="relative">
@@ -244,7 +281,7 @@ const Navbar = () => {
                 }`}
               />
               <span className="absolute -top-2 -right-2 bg-[#B59175] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                0
+                {wishlistItems?.length || 0}
               </span>
             </Link>
             <Link href="/cart" className="relative">

@@ -18,7 +18,7 @@ const OrderCard = ({ orderData }: { orderData: OrderData }) => {
   const { user } = useUser();
 
   return (
-    <div className="px-2 md:px-6 xl:px-28">
+    <div>
       <h1 className="text-3xl font-bold mb-10 text-center">
         Order Verification
       </h1>

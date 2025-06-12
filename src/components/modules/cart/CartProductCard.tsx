@@ -32,7 +32,9 @@ const CartProductCard = ({ product }: { product: TList }) => {
         <div className="flex gap-5 my-2">
           <p>
             <span className="text-gray-500">Category:</span>
-            <span className="font-semibold">{product?.category}</span>
+            <span className="font-semibold">
+              {product?.category?.categoryName}
+            </span>
           </p>
         </div>
         <hr className="my-1" />

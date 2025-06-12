@@ -10,7 +10,7 @@ import {
   orderedProductsSelector,
   orderSelector,
   phoneSelector,
-  sunTotalSelector,
+  subTotalSelector,
 } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { createOrder } from "@/services/Cart";
@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const PaymentDetails = () => {
-  const sunTotal = useAppSelector(sunTotalSelector);
+  const sunTotal = useAppSelector(subTotalSelector);
   const allItems = useAppSelector(orderedProductsSelector);
   const order = useAppSelector(orderSelector);
   const cartProducts = useAppSelector(orderedProductsSelector);

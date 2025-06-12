@@ -93,14 +93,9 @@ const SalesCard = ({
           </div>
         </div>
         <div className="mt-4">
-          <h1 className="text-2xl font-semibold mb-3">Products</h1>
+          <h1 className="text-2xl font-semibold mb-3">Product Ids</h1>
           {sale?.items?.map((item: TItem, i: number) => (
-            <p key={i}>
-              <span className="text-base font-semibold mr-1">ProductId:</span>
-              {item?.itemId},
-              <span className="text-base font-semibold mr-1">Price:</span>
-              {item?.price}
-            </p>
+            <p key={i}>{item?.itemId},</p>
           ))}
         </div>
       </div>
