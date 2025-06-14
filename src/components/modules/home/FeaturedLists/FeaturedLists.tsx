@@ -8,15 +8,15 @@ const FeaturedLists = ({ allItems }: { allItems: TList[] }) => {
     <section className="px-2 lg:px-16 mt-16">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center mb-12">
-          <h2 className="text-4xl font-bold font-sans mb-4">Featured Items</h2>
-          <p className="text-gray-600 max-w-2xl">
-            Discover our handpicked selection of premium products, carefully
-            curated to bring you the best in quality and style.
-          </p>
+          <h2 className="text-center text-3xl md:text-5xl font-light mb-12">
+            <span className="text-[#D6C3A1] italic font-semibold mr-2">
+              Featured
+            </span>
+            <span className="text-gray-900 font-normal">Items</span>
+          </h2>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {allItems?.slice(0, 6)?.map((item) => (
+          {allItems?.slice(0, 8)?.map((item) => (
             <ProductCard key={item?._id} item={item} />
           ))}
         </div>

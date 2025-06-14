@@ -20,7 +20,7 @@ const Categories = ({ categories }: { categories: TFetchedCategory[] }) => {
   return (
     <div className="md:w-[90%] w-[95%] mx-auto pt-32">
       <div className="container mx-auto px-4" ref={ref}>
-        <h2 className="text-3xl md:text-4xl font-bold text-[#B59175] mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#B59175] mb-8 text-center">
           Shop by Category
         </h2>
 

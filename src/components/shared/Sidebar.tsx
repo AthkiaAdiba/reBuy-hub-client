@@ -53,6 +53,11 @@ const adminRoutes = [
     icon: <MdSubscriptions />,
     link: "/admin/dashboard/subscribers",
   },
+  {
+    name: "Reviews",
+    link: "/admin/dashboard/reviews",
+    icon: <MdRateReview />,
+  },
 ];
 
 const userRoutes = [
@@ -84,6 +89,11 @@ const userRoutes = [
   {
     name: "Sales History",
     link: "/user/dashboard/sales-history",
+    icon: <MdRateReview />,
+  },
+  {
+    name: "Reviews",
+    link: "/user/dashboard/reviews",
     icon: <MdRateReview />,
   },
 ];

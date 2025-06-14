@@ -5,18 +5,13 @@ import Link from "next/link";
 const OfferSection = ({ allItems }: { allItems: TList[] }) => {
   const offeredItems = allItems.filter((item) => item.offerPrice > 0);
 
-  // const offersData = offeredItems.map((item) => ({
-  //   id: item._id,
-  //   productName: item.title,
-  //   productPercentage: Math.round((item.offerPrice / item.price) * 100),
-  //   image: item.images[0] || "/images/placeholder.jpg",
-  //   link: `/product/${item._id}`,
-  // }));
-
   return (
     <div className="px-2 lg:px-16 pt-12">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#B59175] mb-8">
-        Special Offers
+      <h2 className="text-center text-3xl md:text-5xl font-light mb-12">
+        <span className="text-[#D6C3A1] italic font-semibold mr-2">
+          Special
+        </span>
+        <span className="text-gray-900 font-normal">Offers</span>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {offeredItems.map((offer) => (

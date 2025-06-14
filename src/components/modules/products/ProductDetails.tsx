@@ -67,7 +67,7 @@ const ProductDetails = ({ product }: { product: TList }) => {
       <div className="bg-white rounded-md p-6 flex flex-col justify-between">
         <div>
           <h1
-            className={`uppercase px-2 mb-4 max-w-[15%] text-center text-white ${
+            className={`uppercase px-2 mb-4 max-w-[50%] md:max-w-[15%] text-center text-white ${
               product?.status === "sold" ? "bg-red-500" : "bg-[#B59175]"
             }`}
           >
@@ -136,26 +136,6 @@ const ProductDetails = ({ product }: { product: TList }) => {
         <div className="flex border-b border-gray-300">
           <button
             className={`px-4 py-2 text-lg font-medium ${
-              activeTab === "description"
-                ? "border-b-2 border-[#B59175] text-[#B59175]"
-                : "text-gray-600"
-            }`}
-            onClick={() => setActiveTab("description")}
-          >
-            DESCRIPTION
-          </button>
-          <button
-            className={`px-4 py-2 text-lg font-medium ${
-              activeTab === "additional"
-                ? "border-b-2 border-[#B59175] text-[#B59175]"
-                : "text-gray-600"
-            }`}
-            onClick={() => setActiveTab("additional")}
-          >
-            ADDITIONAL INFORMATION
-          </button>
-          <button
-            className={`px-4 py-2 text-lg font-medium ${
               activeTab === "reviews"
                 ? "border-b-2 border-[#B59175] text-[#B59175]"
                 : "text-gray-600"
@@ -176,25 +156,6 @@ const ProductDetails = ({ product }: { product: TList }) => {
           </button>
         </div>
         <div className="p-4 bg-white rounded-md">
-          {activeTab === "description" && (
-            <div>
-              <h3 className="font-bold text-xl mb-2">Product Description</h3>
-              <p className="text-gray-600">
-                {product?.description ||
-                  "Detailed product description goes here."}
-              </p>
-            </div>
-          )}
-          {activeTab === "additional" && (
-            <div>
-              <h3 className="font-bold text-xl mb-2">Additional Information</h3>
-              <p className="text-gray-600">Weight: 10kg</p> {/* Dummy data */}
-              <p className="text-gray-600">Dimensions: 1m x 0.5m x 0.5m</p>{" "}
-              {/* Dummy data */}
-              <p className="text-gray-600">Material: Velvet</p>{" "}
-              {/* Dummy data */}
-            </div>
-          )}
           {activeTab === "reviews" && (
             <div>
               <AllReviews productId={product?._id} />

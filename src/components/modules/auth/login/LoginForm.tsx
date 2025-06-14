@@ -35,6 +35,16 @@ const LoginForm = () => {
   const redirect = searchParams.get("redirectPath");
   const router = useRouter();
 
+  const handleAdminCredentials = () => {
+    form.setValue("email", "athkia@gmail.com");
+    form.setValue("password", "123456");
+  };
+
+  const handleUserCredentials = () => {
+    form.setValue("email", "tina@gmail.com");
+    form.setValue("password", "athkia");
+  };
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Logging...", {
       duration: 2000,
@@ -68,6 +78,24 @@ const LoginForm = () => {
             Welcome back!
           </p>
         </div>
+      </div>
+      <div className="flex gap-2 my-4">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleAdminCredentials}
+          className="rounded-none px-4 font-sans py-2 text-[#B59175] border-[#B59175] hover:bg-[#B59175] hover:text-white flex-1"
+        >
+          Admin Credentials
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleUserCredentials}
+          className="rounded-none px-4 font-sans py-2 text-[#B59175] border-[#B59175] hover:bg-[#B59175] hover:text-white flex-1"
+        >
+          User Credentials
+        </Button>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-6">

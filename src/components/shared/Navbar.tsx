@@ -59,10 +59,8 @@ const Navbar = () => {
     { href: "/products", label: "Products" },
     { href: "/categories", label: "Categories" },
     { href: "/offers", label: "Offers" },
-    { href: "/brands", label: "Brands" },
-    { href: "/new-arrivals", label: "New Arrivals" },
-    { href: "/trending", label: "Trending" },
-    { href: "/about", label: "About Us" },
+    { href: "/about-us", label: "About Us" },
+    { href: "/contact-us", label: "Contact Us" },
   ];
 
   const megaMenuCategories = [
@@ -144,14 +142,24 @@ const Navbar = () => {
             <ul className="flex gap-2 xl:gap-6 text-base xl:text-lg font-medium">
               {navLinks.map(({ href, label }) => (
                 <li key={href} className="relative group">
-                  <Link
-                    href={href}
-                    className={`${
-                      pathname === href ? "text-[#B59175]" : "text-inherit"
-                    } hover:text-[#B59175] transition-colors`}
-                  >
-                    {label}
-                  </Link>
+                  {label === "Categories" ? (
+                    <span
+                      className={`${
+                        pathname === href ? "text-[#B59175]" : "text-inherit"
+                      } hover:text-[#B59175] transition-colors cursor-pointer`}
+                    >
+                      {label}
+                    </span>
+                  ) : (
+                    <Link
+                      href={href}
+                      className={`${
+                        pathname === href ? "text-[#B59175]" : "text-inherit"
+                      } hover:text-[#B59175] transition-colors`}
+                    >
+                      {label}
+                    </Link>
+                  )}
                   {label === "Categories" && (
                     <div className="absolute hidden group-hover:block w-[1200px] left-0 top-full bg-white shadow-lg p-6">
                       <div className="grid grid-cols-4 gap-8">

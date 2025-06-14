@@ -66,7 +66,7 @@ export default function ReviewForm({ sellerId, productId }: addReviewProp) {
   };
 
   return (
-    <div className="pt-14">
+    <div className="pt-12">
       <h1 className="text-3xl font-semibold mb-6">ADD A REVIEW</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
