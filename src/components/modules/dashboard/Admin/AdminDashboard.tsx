@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  MdDashboard,
-  MdOutlineShoppingCart,
-  MdPeople,
-  MdSettings,
-} from "react-icons/md";
+import { MdDashboard, MdOutlineShoppingCart, MdPeople } from "react-icons/md";
 import { FaBox } from "react-icons/fa";
 
 interface DashboardCardProps {
